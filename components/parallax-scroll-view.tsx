@@ -9,7 +9,7 @@ import Animated, {
 
 import { ThemedView } from '@/components/themed-view';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useColorScheme } from 'react-native';
 
 const HEADER_HEIGHT = 250;
 
