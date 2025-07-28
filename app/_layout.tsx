@@ -1,9 +1,13 @@
+import { ErrorBoundary } from '@/components/error-boundary';
+import { SplashScreen } from '@/components/splash-screen';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import * as ExpoDevice from "expo-device";
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
+import { Try } from 'expo-router/build/views/Try';
 import { StatusBar } from 'expo-status-bar';
+import { Suspense } from 'react';
 import { Platform, useColorScheme } from "react-native";
 import 'react-native-reanimated';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -58,14 +62,18 @@ const AppContent = () => {
       // Public environment variables are automatically loaded
   }});
   return (
-      <Stack screenOptions={{headerShown: false}}>
-        <Stack.Protected guard={!isRegistered}>
-          <Stack.Screen name="get-started" options={{headerShown: false}}/>
-          <Stack.Screen name="qr-scan" options={{headerShown: false}}/>
-        </Stack.Protected>
-        <Stack.Protected guard={isRegistered}>
-          <Stack.Screen name="registered" options={{headerShown: false}}/>
-        </Stack.Protected>
-      </Stack>
+      <Try catch={ErrorBoundary}>
+        <Suspense fallback={<SplashScreen/>}>
+          <Stack screenOptions={{headerShown: false}}>
+            <Stack.Protected guard={!isRegistered}>
+              <Stack.Screen name="get-started" options={{headerShown: false}}/>
+              <Stack.Screen name="qr-scan" options={{headerShown: false}}/>
+            </Stack.Protected>
+            <Stack.Protected guard={isRegistered}>
+              <Stack.Screen name="registered" options={{headerShown: false}}/>
+            </Stack.Protected>
+          </Stack>
+        </Suspense>
+      </Try>
   );
 }
