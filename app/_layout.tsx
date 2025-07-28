@@ -41,7 +41,7 @@ const AppContent = () => {
   let isRegistered = false;
   useSyncQueriesExternal({
     queryClient,
-    socketURL: `http://${process.env.EXPO_PUBLIC_LOCAL_IP_ADDRESS}:42831`, // Default port for React Native DevTools
+    socketURL: `http://${process.env.EXPO_PUBLIC_LOCAL_IP_ADDRESS || 'localhost'}:42831`, // Default port for React Native DevTools
     deviceName: Platform?.OS || "web", // Platform detection
     platform: Platform?.OS || "web", // Use appropriate platform identifier
     deviceId: Platform?.OS || "web", // Use a PERSISTENT identifier (see note below)

@@ -1,19 +1,10 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { Redirect } from "expo-router";
-import * as ExpoSplashScreen from 'expo-splash-screen';
 import { SafeAreaView } from "react-native-safe-area-context";
 
-ExpoSplashScreen.preventAutoHideAsync();
-
-// Set the animation options. This is optional.
-ExpoSplashScreen.setOptions({
-  duration: 1000,
-  fade: true,
-});
-
 const SplashScreen = () => {
-    const isRegistered = false; // Change this based on your app's registration logic
+    const isRegistered = false; // Replace with actual registration check logic
    
     if (!isRegistered) return <Redirect href="/get-started" />;
 
