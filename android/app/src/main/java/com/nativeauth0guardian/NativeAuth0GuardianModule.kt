@@ -1,14 +1,16 @@
 package com.nativeauth0guardian
 
+import android.os.Build
+import android.provider.Settings.Secure
 import android.util.Log
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import androidx.core.net.toUri
+import com.auth0.android.guardian.sdk.CurrentDevice
 import com.auth0.android.guardian.sdk.Guardian
 import kotlin.concurrent.Volatile
 
 class NativeAuth0GuardianModule(reactContext: ReactApplicationContext) : NativeAuth0GuardianSpec(reactContext) {
-
 
     override fun getName() = NAME
 
@@ -21,6 +23,7 @@ class NativeAuth0GuardianModule(reactContext: ReactApplicationContext) : NativeA
             }
         }.onSuccess {
             Log.i(TAG, "Guardian initialised successfully")
+            Log.i(TAG, deviceModel)
             promise?.resolve(null)
         }.onFailure { exception ->
             promise?.reject(
@@ -31,8 +34,13 @@ class NativeAuth0GuardianModule(reactContext: ReactApplicationContext) : NativeA
     }
 
     override fun enroll(enrollmentURI: String?, pushToken: String?, promise: Promise?) {
-
         Log.i(TAG, "Enrolling device...")
+//        val device = CurrentDevice(reactContext, pushToken, )
+        runCatching {
+            enrollmentURI?.let {
+//                guardian?.enroll()
+            }
+        }
     }
 
     override fun getEnrollment(promise: Promise?) {
@@ -60,5 +68,8 @@ class NativeAuth0GuardianModule(reactContext: ReactApplicationContext) : NativeA
         const val NAME = "NativeAuth0Guardian"
         @Volatile
         private var guardian: Guardian? = null
+        @Volatile
+        private var reactContext: ReactApplicationContext? = null
+        private val deviceModel = Build.MODEL
     }
 }
